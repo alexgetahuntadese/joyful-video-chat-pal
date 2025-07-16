@@ -27,7 +27,7 @@ const Grade11Subject = () => {
   // Define Grade 11 chapter IDs by subject
   const grade11ChapterIds: { [key: string]: string[] } = {
     mathematics: ['math-11-1', 'math-11-2', 'math-11-3', 'math-11-4', 'math-11-5', 'math-11-6', 'math-11-7', 'math-11-8'],
-    physics: ['physics-11-mechanics', 'physics-11-thermodynamics', 'physics-11-waves'],
+    physics: ['phys-11-1', 'phys-11-2', 'phys-11-3', 'phys-11-4', 'phys-11-5', 'phys-11-6', 'phys-11-7', 'phys-11-8'],
     chemistry: ['chemistry-11-organic', 'chemistry-11-analytical', 'chemistry-11-physical'],
     biology: ['biology-11-anatomy', 'biology-11-genetics', 'biology-11-evolution', 'biology-11-ecology'],
     // Add other subjects as needed
