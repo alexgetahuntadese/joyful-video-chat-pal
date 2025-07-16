@@ -1,7 +1,9 @@
 import { Chapter } from '../types';
+import { grade11AgricultureChapters } from './agriculture/grade11';
 import { grade12AgricultureChapters } from './agriculture/grade12';
 
 export const agricultureChapters: Chapter[] = [
+  ...grade11AgricultureChapters,
   {
     id: 'crop_production',
     name: 'Crop Production and Management',
