@@ -1,3 +1,4 @@
+
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -24,14 +25,27 @@ const Grade11Subject = () => {
   console.log('Chapter IDs:', chapters.map(ch => ch.id));
   console.log('Total questions:', totalQuestions);
 
-  // Filter for Grade 11 chapters only
-  const grade11Chapters = chapters.filter(chapter => 
-    chapter.id.includes('math-11-') || // Mathematics Grade 11 pattern
-    chapter.id.includes('physics-11-') || // Physics Grade 11 pattern
-    chapter.id.includes('11') || 
-    chapter.id.includes('grade11') ||
-    chapter.name.includes('Grade 11')
-  );
+  // Define Grade 11 chapter IDs by subject
+  const grade11ChapterIds: { [key: string]: string[] } = {
+    mathematics: ['algebra', 'geometry', 'grade11_functions'],
+    physics: ['physics-11-mechanics', 'physics-11-thermodynamics', 'physics-11-waves'],
+    chemistry: ['chemistry-11-organic', 'chemistry-11-analytical', 'chemistry-11-physical'],
+    biology: ['biology-11-anatomy', 'biology-11-genetics', 'biology-11-evolution', 'biology-11-ecology'],
+    // Add other subjects as needed
+  };
+
+  // Filter for Grade 11 chapters using the defined IDs or fallback to pattern matching
+  const grade11Chapters = chapters.filter(chapter => {
+    // First check if we have specific IDs defined for this subject
+    if (grade11ChapterIds[subject]) {
+      return grade11ChapterIds[subject].includes(chapter.id);
+    }
+    
+    // Fallback to pattern matching for subjects not specifically defined
+    return chapter.id.includes('11') || 
+           chapter.id.includes('grade11') ||
+           chapter.name.includes('Grade 11');
+  });
 
   console.log('Filtered grade 11 chapters:', grade11Chapters);
   console.log('Grade 11 chapter count:', grade11Chapters.length);
