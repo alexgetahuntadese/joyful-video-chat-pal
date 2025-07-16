@@ -17,7 +17,6 @@ const Grade11Subject = () => {
   const chapters = getChaptersBySubject(subject);
   const totalQuestions = getTotalQuestionsBySubject(subject);
 
-  // Debug logging
   console.log('=== Grade 11 Subject Debug ===');
   console.log('Subject parameter:', subject);
   console.log('All chapters for subject:', chapters);
@@ -106,14 +105,6 @@ const Grade11Subject = () => {
           </div>
         </div>
 
-        {/* Debug information display */}
-        <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <h3 className="font-semibold text-blue-800 mb-2">Debug Information:</h3>
-          <p><strong>Subject:</strong> {subject}</p>
-          <p><strong>Total chapters found:</strong> {chapters.length}</p>
-          <p><strong>Grade 11 chapters filtered:</strong> {grade11Chapters.length}</p>
-          <p><strong>All chapter IDs:</strong> {chapters.map(ch => ch.id).join(', ')}</p>
-        </div>
 
         <div className="grid gap-4">
           {grade11Chapters.length > 0 ? (
@@ -192,10 +183,6 @@ const Grade11Subject = () => {
             <Card>
               <CardContent className="text-center py-8">
                 <p className="text-gray-500">No Grade 11 chapters available for this subject yet.</p>
-                <div className="mt-4 text-sm text-gray-400">
-                  <p>Debug: Found {chapters.length} total chapters</p>
-                  <p>Subject: {subject}</p>
-                </div>
                 <Button 
                   onClick={() => navigate('/grade11')} 
                   variant="outline"
