@@ -19,10 +19,11 @@ const Grade11Subject = () => {
 
   // Filter for Grade 11 chapters only
   const grade11Chapters = chapters.filter(chapter => 
+    chapter.id.includes('math-11-') || // Mathematics Grade 11 pattern
+    chapter.id.includes('physics-11-') || // Physics Grade 11 pattern
     chapter.id.includes('11') || 
     chapter.id.includes('grade11') ||
-    chapter.name.includes('Grade 11') ||
-    chapter.id.includes('-11-') // This will catch patterns like math-11-X
+    chapter.name.includes('Grade 11')
   );
 
   const subjectNames: { [key: string]: string } = {
