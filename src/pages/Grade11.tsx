@@ -15,6 +15,86 @@ const Grade11 = () => {
       icon: Calculator,
       color: 'bg-blue-600',
       questions: 120
+    },
+    {
+      id: 'physics',
+      name: 'Physics',
+      description: 'Mechanics, thermodynamics, waves, electricity, and modern physics',
+      icon: Atom,
+      color: 'bg-purple-600',
+      questions: 100
+    },
+    {
+      id: 'chemistry',
+      name: 'Chemistry',
+      description: 'Organic chemistry, analytical chemistry, and physical chemistry',
+      icon: Leaf,
+      color: 'bg-green-600',
+      questions: 95
+    },
+    {
+      id: 'biology',
+      name: 'Biology',
+      description: 'Human anatomy, genetics, evolution, ecology, and plant biology',
+      icon: Heart,
+      color: 'bg-red-600',
+      questions: 110
+    },
+    {
+      id: 'geography',
+      name: 'Geography',
+      description: 'Physical geography, human geography, and environmental studies',
+      icon: Globe,
+      color: 'bg-blue-500',
+      questions: 85
+    },
+    {
+      id: 'history',
+      name: 'History',
+      description: 'World history, Ethiopian history, and historical analysis',
+      icon: History,
+      color: 'bg-amber-600',
+      questions: 90
+    },
+    {
+      id: 'economics',
+      name: 'Economics',
+      description: 'Microeconomics, macroeconomics, and economic theory',
+      icon: Briefcase,
+      color: 'bg-indigo-600',
+      questions: 80
+    },
+    {
+      id: 'english',
+      name: 'English',
+      description: 'Literature, grammar, composition, and communication skills',
+      icon: Languages,
+      color: 'bg-pink-600',
+      questions: 75
+    },
+    {
+      id: 'civics',
+      name: 'Civics & Ethics',
+      description: 'Citizenship, human rights, democratic governance, and ethical values',
+      icon: Flag,
+      color: 'bg-cyan-600',
+      questions: 70
+    },
+    {
+      id: 'information-technology',
+      name: 'Information Technology',
+      description: 'Computer systems, programming, networks, and digital literacy',
+      icon: Computer,
+      color: 'bg-slate-600',
+      questions: 65
+    },
+    {
+      id: 'general-business',
+      name: 'General Business',
+      description: 'Business principles, entrepreneurship, and management',
+      icon: Briefcase,
+      color: 'bg-emerald-600',
+      questions: 60
     }
   ];
 

@@ -17,8 +17,13 @@ const Grade11Subject = () => {
   const chapters = getChaptersBySubject(subject);
   const totalQuestions = getTotalQuestionsBySubject(subject);
 
-  // Since we're on the Grade 11 page, show all chapters (they should all be Grade 11)
-  const grade11Chapters = chapters;
+  // Filter for Grade 11 chapters only
+  const grade11Chapters = chapters.filter(chapter => 
+    chapter.id.includes('11') || 
+    chapter.id.includes('grade11') ||
+    chapter.name.includes('Grade 11') ||
+    chapter.id.includes('-11-') // This will catch patterns like math-11-X
+  );
 
   const subjectNames: { [key: string]: string } = {
     mathematics: 'Advanced Mathematics',
