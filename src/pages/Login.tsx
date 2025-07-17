@@ -7,10 +7,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { toast } from "@/hooks/use-toast";
 
 const Login = () => {
-  const { isAuthenticated, login } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  if (!authContext) {
+    return <div>Loading...</div>;
+  }
+
+  const { isAuthenticated, login } = authContext;
 
   if (isAuthenticated) {
     return <Navigate to="/" replace />;
