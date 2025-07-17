@@ -13,7 +13,13 @@ import {
 import { AuthContext } from "@/App";
 
 const Index = () => {
-  const { logout } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
+
+  if (!authContext) {
+    return <div>Loading...</div>;
+  }
+
+  const { logout } = authContext;
 
   const handleLogout = () => {
     logout();
