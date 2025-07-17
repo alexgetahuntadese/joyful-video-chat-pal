@@ -98,9 +98,9 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
+      <BrowserRouter>
         <AuthProvider>
-          <BrowserRouter>
+          <TooltipProvider>
             <Suspense fallback={<LoadingSpinner />}>
               <Routes>
                 <Route path="/login" element={<Login />} />
@@ -167,9 +167,9 @@ const App = () => {
               </Routes>
             </Suspense>
             <Toaster />
-          </BrowserRouter>
+          </TooltipProvider>
         </AuthProvider>
-      </TooltipProvider>
+      </BrowserRouter>
     </QueryClientProvider>
   );
 };
