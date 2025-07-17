@@ -11,12 +11,9 @@ const Login = lazy(() => import("./pages/Login"));
 const SignUp = lazy(() => import("./pages/SignUp"));
 const Grade9 = lazy(() => import("./pages/Grade9"));
 const Grade10 = lazy(() => import("./pages/Grade10"));
-const Grade11 = lazy(() => import("./pages/Grade11"));
 const Grade12 = lazy(() => import("./pages/Grade12"));
 const Subject = lazy(() => import("./pages/Subject"));
 const Quiz = lazy(() => import("./pages/Quiz"));
-const Grade11Subject = lazy(() => import("./pages/Grade11Subject"));
-const Grade11Quiz = lazy(() => import("./pages/Grade11Quiz"));
 const Grade12Subject = lazy(() => import("./pages/Grade12Subject"));
 const Grade12Quiz = lazy(() => import("./pages/Grade12Quiz"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -121,11 +118,6 @@ const App = () => {
                     <Grade10 />
                   </ProtectedRoute>
                 } />
-                <Route path="/grade11" element={
-                  <ProtectedRoute>
-                    <Grade11 />
-                  </ProtectedRoute>
-                } />
                 <Route path="/grade-12" element={
                   <ProtectedRoute>
                     <Grade12 />
@@ -139,16 +131,6 @@ const App = () => {
                 <Route path="/:grade/:subject/:chapter/:difficulty" element={
                   <ProtectedRoute>
                     <Quiz />
-                  </ProtectedRoute>
-                } />
-                <Route path="/grade11/:subject" element={
-                  <ProtectedRoute>
-                    <Grade11Subject />
-                  </ProtectedRoute>
-                } />
-                <Route path="/grade11/:subject/:chapter/:difficulty" element={
-                  <ProtectedRoute>
-                    <Grade11Quiz />
                   </ProtectedRoute>
                 } />
                 <Route path="/grade-12/:subject" element={
