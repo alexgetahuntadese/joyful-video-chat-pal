@@ -14,7 +14,127 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      quiz_answers: {
+        Row: {
+          answered_at: string
+          id: string
+          is_correct: boolean
+          question_index: number
+          selected_answer: string
+          session_id: string
+          user_id: string
+        }
+        Insert: {
+          answered_at?: string
+          id?: string
+          is_correct: boolean
+          question_index: number
+          selected_answer: string
+          session_id: string
+          user_id: string
+        }
+        Update: {
+          answered_at?: string
+          id?: string
+          is_correct?: boolean
+          question_index?: number
+          selected_answer?: string
+          session_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_answers_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "quiz_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quiz_sessions: {
+        Row: {
+          chapter: string
+          created_at: string
+          current_question_index: number
+          current_turn_user_id: string | null
+          difficulty: string
+          id: string
+          room_id: string
+          status: string
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          chapter: string
+          created_at?: string
+          current_question_index?: number
+          current_turn_user_id?: string | null
+          difficulty: string
+          id?: string
+          room_id: string
+          status?: string
+          subject: string
+          updated_at?: string
+        }
+        Update: {
+          chapter?: string
+          created_at?: string
+          current_question_index?: number
+          current_turn_user_id?: string | null
+          difficulty?: string
+          id?: string
+          room_id?: string
+          status?: string
+          subject?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      session_participants: {
+        Row: {
+          display_name: string
+          id: string
+          is_ready: boolean
+          joined_at: string
+          score: number
+          session_id: string
+          stream_token: string
+          stream_user_id: string
+          user_id: string
+        }
+        Insert: {
+          display_name: string
+          id?: string
+          is_ready?: boolean
+          joined_at?: string
+          score?: number
+          session_id: string
+          stream_token: string
+          stream_user_id: string
+          user_id: string
+        }
+        Update: {
+          display_name?: string
+          id?: string
+          is_ready?: boolean
+          joined_at?: string
+          score?: number
+          session_id?: string
+          stream_token?: string
+          stream_user_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_participants_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "quiz_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
