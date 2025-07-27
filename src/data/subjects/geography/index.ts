@@ -1,5 +1,6 @@
 import { Chapter } from '../../types';
+import { grade11GeographyChapters } from './grade11';
 
 export const geographyChapters: Chapter[] = [
-  // No geography content available
+  ...grade11GeographyChapters
 ];

@@ -1,6 +1,6 @@
 import { Chapter } from '../../types';
-import { grade12EnglishChapters } from './grade12';
+import { grade11EnglishChapters } from './grade11';
 
 export const englishChapters: Chapter[] = [
-  ...grade12EnglishChapters
+  ...grade11EnglishChapters
 ];

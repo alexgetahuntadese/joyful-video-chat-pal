@@ -1,5 +1,6 @@
 import { Chapter } from '../../types';
+import { grade11EconomicsChapters } from './grade11';
 
 export const economicsChapters: Chapter[] = [
-  // No economics content available
+  ...grade11EconomicsChapters
 ];
