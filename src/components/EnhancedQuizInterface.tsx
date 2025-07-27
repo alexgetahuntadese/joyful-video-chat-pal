@@ -4,10 +4,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Clock, CheckCircle, XCircle, BookOpen, Zap, Target } from 'lucide-react';
+import { ArrowLeft, Clock, CheckCircle, XCircle, BookOpen, Zap, Target, Eye } from 'lucide-react';
 import { useAdaptiveTheme } from '@/components/AdaptiveThemeProvider';
 import { usePersonalization } from '@/hooks/usePersonalization';
 import PersonalizedProgressRing from '@/components/PersonalizedProgressRing';
+import { useTranslation } from '@/contexts/TranslationContext';
+import LanguageSelector from '@/components/LanguageSelector';
 
 interface EnhancedQuizInterfaceProps {
   subject: string;
@@ -30,10 +32,12 @@ const EnhancedQuizInterface: React.FC<EnhancedQuizInterfaceProps> = ({
 }) => {
   const { themeClasses } = useAdaptiveTheme();
   const { profile, trackBehavior } = usePersonalization();
+  const { t } = useTranslation();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string>('');
   const [answers, setAnswers] = useState<{ [key: number]: string }>({});
   const [showFeedback, setShowFeedback] = useState(false);
+  const [showAnswer, setShowAnswer] = useState(false);
   const [timeLeft, setTimeLeft] = useState(90);
   const [streak, setStreak] = useState(0);
 
@@ -78,6 +82,7 @@ const EnhancedQuizInterface: React.FC<EnhancedQuizInterfaceProps> = ({
 
   const handleContinue = () => {
     setShowFeedback(false);
+    setShowAnswer(false);
     setSelectedAnswer('');
     setTimeLeft(90);
     
@@ -135,17 +140,18 @@ const EnhancedQuizInterface: React.FC<EnhancedQuizInterfaceProps> = ({
             className="flex items-center space-x-2 hover-scale"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Back</span>
+            <span>{t('back')}</span>
           </Button>
           
           <div className="flex items-center space-x-4">
+            <LanguageSelector />
             <Badge variant="secondary" className="flex items-center space-x-1">
               <BookOpen className="w-4 h-4" />
               <span>{chapterName}</span>
             </Badge>
             <Badge className={`${themeClasses.accent} text-white flex items-center space-x-1`}>
               {getDifficultyIcon(difficulty)}
-              <span>{difficulty.toUpperCase()}</span>
+              <span>{t(difficulty)}</span>
             </Badge>
             {streak > 1 && (
               <Badge className="bg-orange-500 text-white animate-pulse">
@@ -165,8 +171,8 @@ const EnhancedQuizInterface: React.FC<EnhancedQuizInterfaceProps> = ({
                 mood={profile.mood.current}
               />
               <div>
-                <p className="font-medium">Question {currentQuestionIndex + 1} of {questions.length}</p>
-                <p className="text-sm text-gray-600">{Math.round(progress)}% Complete</p>
+                <p className="font-medium">{t('question')} {currentQuestionIndex + 1} of {questions.length}</p>
+                <p className="text-sm text-gray-600">{Math.round(progress)}% {t('complete')}</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -183,10 +189,21 @@ const EnhancedQuizInterface: React.FC<EnhancedQuizInterfaceProps> = ({
         <Card className="mb-6 shadow-xl border-0 bg-white/95 backdrop-blur-sm animate-scale-in">
           <CardHeader className={`bg-gradient-to-r ${themeClasses.primary} text-white rounded-t-lg`}>
             <CardTitle className="text-xl flex items-center justify-between">
-              <span>Question {currentQuestionIndex + 1}</span>
-              <Badge variant="secondary" className="bg-white/20 text-white">
-                {currentQuestion.difficulty}
-              </Badge>
+              <span>{t('question')} {currentQuestionIndex + 1}</span>
+              <div className="flex items-center space-x-2">
+                <Badge variant="secondary" className="bg-white/20 text-white">
+                  {t(currentQuestion.difficulty)}
+                </Badge>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowAnswer(!showAnswer)}
+                  className="text-white hover:bg-white/20 p-1"
+                  title={t('showAnswer')}
+                >
+                  <Eye className="w-4 h-4" />
+                </Button>
+              </div>
             </CardTitle>
           </CardHeader>
           <CardContent className="p-6">
@@ -199,7 +216,7 @@ const EnhancedQuizInterface: React.FC<EnhancedQuizInterfaceProps> = ({
                 const isSelected = selectedAnswer === option;
                 const isCorrect = option === currentQuestion.correct;
                 const isWrong = showFeedback && isSelected && !isCorrect;
-                const shouldShowCorrect = showFeedback && isCorrect;
+                const shouldShowCorrect = (showFeedback && isCorrect) || (showAnswer && isCorrect);
                 
                 return (
                   <Button
@@ -211,7 +228,7 @@ const EnhancedQuizInterface: React.FC<EnhancedQuizInterfaceProps> = ({
                       isSelected ? `${themeClasses.accent} text-white` : ''
                     }`}
                     onClick={() => handleAnswerSelect(option)}
-                    disabled={showFeedback}
+                    disabled={showFeedback || showAnswer}
                   >
                     <div className="flex items-center space-x-3 w-full">
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
@@ -228,12 +245,12 @@ const EnhancedQuizInterface: React.FC<EnhancedQuizInterfaceProps> = ({
               })}
             </div>
             
-            {showFeedback && currentQuestion.explanation && (
+            {(showFeedback || showAnswer) && currentQuestion.explanation && (
               <div className="mt-6 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500 animate-fade-in">
                 <div className="flex items-start space-x-2">
                   <BookOpen className="w-5 h-5 text-blue-600 mt-0.5" />
                   <div>
-                    <p className="font-medium text-blue-800 mb-1">Explanation</p>
+                    <p className="font-medium text-blue-800 mb-1">{t('explanation')}</p>
                     <p className="text-sm text-blue-700">{currentQuestion.explanation}</p>
                   </div>
                 </div>
@@ -247,20 +264,20 @@ const EnhancedQuizInterface: React.FC<EnhancedQuizInterfaceProps> = ({
           <div className="text-sm text-gray-600">
             Current Score: {Object.values(answers).filter((answer, index) => answer === questions[index]?.correct).length} / {currentQuestionIndex + (showFeedback ? 1 : 0)}
           </div>
-          {!showFeedback ? (
+          {!showFeedback && !showAnswer ? (
             <Button 
               onClick={handleNextQuestion}
               disabled={!selectedAnswer}
               className={`px-8 hover-scale bg-gradient-to-r ${themeClasses.primary} text-white`}
             >
-              Submit Answer
+              {t('submitAnswer')}
             </Button>
           ) : (
             <Button 
               onClick={handleContinue}
               className={`px-8 hover-scale bg-gradient-to-r ${themeClasses.primary} text-white`}
             >
-              {currentQuestionIndex === questions.length - 1 ? 'Finish Quiz' : 'Continue'}
+              {currentQuestionIndex === questions.length - 1 ? t('finishQuiz') : t('continue')}
             </Button>
           )}
         </div>

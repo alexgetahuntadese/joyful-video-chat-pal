@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-type Language = 'en' | 'om';
+type Language = 'en' | 'om' | 'am';
 
 interface TranslationContextType {
   language: Language;
@@ -92,7 +92,8 @@ const translations = {
     
     // Language selector
     language: 'Language',
-    changeLanguage: 'Change Language'
+    changeLanguage: 'Change Language',
+    showAnswer: 'Show Answer'
   },
   om: {
     // Header
@@ -166,7 +167,83 @@ const translations = {
     
     // Language selector
     language: 'Afaan',
-    changeLanguage: 'Afaan Jijjiiri'
+    changeLanguage: 'Afaan Jijjiiri',
+    showAnswer: 'Deebii Agarsiisi'
+  },
+  am: {
+    // Header
+    appName: 'EthioQuiz',
+    appDescription: 'ክፍል 12 ምዕራፍ በምዕራፍ ዝግጅት',
+    student: 'ተማሪ',
+    
+    // Home page
+    heroTitle: 'በእያንዳንዱ ምዕራፍ ማዳበር፣ በአንድ ጊዜ አንድ ክፍል',
+    heroDescription: 'በምዕራፍ-ተኮር ጥያቄ ስርዓታችን በስርዓት ተማሩ። እያንዳንዱ ትምህርት በተከፋፈሉ ምዕራፎች ተደራጅቷል ይህም ለኢትዮጵያ ክፍል 12 ፈተናዎች አንድ ጊዜ አንድ ርዕስ እንዲሸለሙ ይረዳዎታል።',
+    subjectsAvailable: 'ያሉ ትምህርቶች',
+    chaptersToMaster: 'ለመማር ምዕራፎች',
+    focusedLearning: 'በምዕራፍ ላይ የተመሰረተ ትምህርት',
+    chooseSubject: 'ትምህርትዎን ይምረጡ',
+    footerText: 'ለተሻለ ማስተዋል እና ማስታወስ ምዕራፍ በምዕራፍ ያጥኑ! 📚',
+    
+    // Subject names
+    mathematics: 'ሂሳብ',
+    physics: 'ፊዚክስ',
+    chemistry: 'ኬሚስትሪ',
+    biology: 'ባዮሎጂ',
+    english: 'እንግሊዝኛ',
+    history: 'የኢትዮጵያ ታሪክ',
+    
+    // Subject descriptions
+    mathematicsDesc: 'ተግባሮች፣ ካልኩለስ እና ተንታኝ ጂኦሜትሪ',
+    physicsDesc: 'ሜካኒክስ፣ ኤሌክትሪክ እና ዘመናዊ ፊዚክስ',
+    chemistryDesc: 'የአቶም መዋቅር፣ ትስስር እና ምላሾች',
+    biologyDesc: 'የሴል ባዮሎጂ፣ ጄኔቲክስ እና ፊዚዮሎጂ',
+    englishDesc: 'ሰዋስው፣ ሥነ ጽሑፍ እና የቃላት ዝርዝር',
+    historyDesc: 'ጥንታዊ፣ መካከለኛ እና ዘመናዊ ኢትዮጵያ',
+    
+    // Navigation
+    back: 'ተመለስ',
+    continue: 'ቀጥል',
+    submitAnswer: 'መልስ አስገባ',
+    finishQuiz: 'ጥያቄን አጠናቅቅ',
+    returnHome: 'ወደ ቤት ተመለስ',
+    retakeQuiz: 'ጥያቄን እንደገና ውሰድ',
+    backToChapters: 'ወደ ምዕራፎች ተመለስ',
+    
+    // Quiz interface
+    question: 'ጥያቄ',
+    progress: 'እድገት',
+    complete: 'ተጠናቅቋል',
+    explanation: 'ማብራሪያ',
+    loadingQuestions: 'ጥያቄዎችን እየጫነ...',
+    
+    // Difficulty levels
+    easy: 'ቀላል',
+    medium: 'መካከለኛ',
+    hard: 'ከባድ',
+    selectDifficulty: 'የችግር ደረጃ ይምረጡ',
+    difficultyDescription: 'ለዚህ ምዕራፍ የሚፈልጉትን የችግር ደረጃ ይምረጡ',
+    
+    // Score board
+    quizComplete: 'ጥያቄ ተጠናቅቋል!',
+    yourScore: 'ነጥብዎ',
+    outOf: 'ከ',
+    excellent: 'በጣም ጥሩ! ጥሩ ስራዎን ይቀጥሉ!',
+    good: 'ጥሩ ስራ! እድገት እያደረጉ ነው!',
+    needsPractice: 'መለማመድ ይቀጥሉ! ይሻሻላሉ!',
+    
+    // Chapter names
+    functions: 'ተግባሮች',
+    mechanics: 'ሜካኒክስ',
+    atomicStructure: 'የአቶም መዋቅር',
+    cellBiology: 'የሴል ባዮሎጂ',
+    grammar: 'ሰዋስው',
+    ancientEthiopia: 'ጥንታዊ ኢትዮጵያ',
+    
+    // Language selector
+    language: 'ቋንቋ',
+    changeLanguage: 'ቋንቋ ይቀይሩ',
+    showAnswer: 'መልስ አሳይ'
   }
 };
 
@@ -175,7 +252,7 @@ export const TranslationProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem('language') as Language;
-    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'om')) {
+    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'om' || savedLanguage === 'am')) {
       setLanguage(savedLanguage);
     }
   }, []);

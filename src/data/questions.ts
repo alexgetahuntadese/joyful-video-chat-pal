@@ -62,7 +62,16 @@ export const getChaptersBySubject = (subject: string): Chapter[] => {
     return questionsBySubject[subject] || [];
 };
 
+// Optimized function with memoization for faster loading
+const questionsCache = new Map<string, Question[]>();
+
 export const getQuestionsForQuiz = (subject: string, chapterId: string, difficulty: 'easy' | 'medium' | 'hard', numberOfQuestions: number): Question[] => {
+  const cacheKey = `${subject}-${chapterId}-${difficulty}-${numberOfQuestions}`;
+  
+  if (questionsCache.has(cacheKey)) {
+    return questionsCache.get(cacheKey)!;
+  }
+  
   const chapter = questionsBySubject[subject]?.find(c => c.id === chapterId);
   if (!chapter) {
     return [];
@@ -70,9 +79,12 @@ export const getQuestionsForQuiz = (subject: string, chapterId: string, difficul
 
   const filteredQuestions = chapter.questions.filter(q => q.difficulty === difficulty);
   if (filteredQuestions.length <= numberOfQuestions) {
+    questionsCache.set(cacheKey, filteredQuestions);
     return filteredQuestions;
   }
 
   const shuffledQuestions = [...filteredQuestions].sort(() => 0.5 - Math.random());
-  return shuffledQuestions.slice(0, numberOfQuestions);
+  const result = shuffledQuestions.slice(0, numberOfQuestions);
+  questionsCache.set(cacheKey, result);
+  return result;
 };
